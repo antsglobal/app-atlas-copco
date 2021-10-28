@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-atlas-copco
-          path: ./dist/SCCL
+          path: ./dist/SCCL/*
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +53,4 @@ jobs:
           app-name: 'app-atlas-copco'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0DD036B20D92481A9F06A782CE43DFB7 }}
-          package: ./dist
+          package: .
