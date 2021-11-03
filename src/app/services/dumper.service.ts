@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { dumpermodel, DumperStatus } from '../models/dumpermodel';
 import { ServiceConstants } from '../constants/ServiceConstants';
+
+import { EnvironmentConfig } from 'src/environments/environment-config.interface';
+import { ENV_CONFIG } from '../../environments/environment-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +15,11 @@ import { ServiceConstants } from '../constants/ServiceConstants';
 
 export class DumperService {
 
-  private dumperDetailsUrl = '/dumperdetailscount';
-  private tripDurationUrl = '/durationofthetrip';
-  private dumperIdsUrl = '/alldumperids';
-  private dumperStatusUrl = '/dumperLiveLocation';
-  private tripDetailsUrl = '';
+  private dumperDetailsUrl = ServiceConstants.baseurlv1 + '/dumperdetailscount';
+  private tripDurationUrl = ServiceConstants.baseurlv1 + '/durationofthetrip';
+  private dumperIdsUrl = ServiceConstants.baseurlv1 + '/alldumperids';
+  private dumperStatusUrl = ServiceConstants.baseurlv1 + '/dumperLiveLocation';
+  private tripDetailsUrl = ServiceConstants.baseurlv1 + '';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -24,19 +27,27 @@ export class DumperService {
       'Content-Type': 'application/json',
     }),
   };
+  apiBaseUrl: string
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,  @Inject(ENV_CONFIG) private config: EnvironmentConfig) {
+    this.apiBaseUrl = `${config.environment.apiUrl}`;
+    this.dumperDetailsUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/dumperdetailscount';
+    this.tripDurationUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/durationofthetrip';
+    this.dumperIdsUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/alldumperids';
+    this.dumperStatusUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/dumperLiveLocation';
+    this.tripDetailsUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '';
+  }
 
   public getDumperDetails(dumperModel: dumpermodel): Observable<dumpermodel[]> {
     return this.http.post<dumpermodel[]>(
-      ServiceConstants.baseurlv1 + this.dumperDetailsUrl,
+      this.dumperDetailsUrl,
       dumperModel, this.httpOptions
     );
   }
 
   public getTripDuration(dumperModel: dumpermodel): Observable<dumpermodel[]> {
     return this.http.post<dumpermodel[]>(
-      ServiceConstants.baseurlv1 + this.tripDurationUrl,
+      this.tripDurationUrl,
       dumperModel, this.httpOptions
     );
   }
@@ -44,16 +55,16 @@ export class DumperService {
   getDumperIds(dumper: dumpermodel
   ): Observable<dumpermodel[]> {
     return this.http.get<dumpermodel[]>(
-      ServiceConstants.baseurlv1 + this.dumperIdsUrl
+      this.dumperIdsUrl
     );
   }
 
   getDumperStatus(dumperId): Observable<DumperStatus[]> {
-    return this.http.post<DumperStatus[]>(ServiceConstants.baseurlv1 + this.dumperStatusUrl, dumperId);
+    return this.http.post<DumperStatus[]>(this.dumperStatusUrl, dumperId);
   }
 
   getTripDetails(): Observable<dumpermodel[]> {
-    return this.http.get<dumpermodel[]>(ServiceConstants.baseurlv1 + this.tripDetailsUrl);
+    return this.http.get<dumpermodel[]>(this.tripDetailsUrl);
   }
 
 }

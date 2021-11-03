@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,6 +6,9 @@ import { ServiceConstants } from '../constants/ServiceConstants';
 import { DashboardDataAdapter, DevicesCountAdapter, RecentTripDataAdapter } from '../models/dashboardmodel';
 import { map } from 'rxjs/operators';
 import { DashboardDate } from '../models/dashboarddatamodel ';
+
+import { EnvironmentConfig } from 'src/environments/environment-config.interface';
+import { ENV_CONFIG } from '../../environments/environment-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +26,16 @@ export class DashboardService {
     }),
   };
 
+  apiBaseUrl: string
+
   constructor(private http: HttpClient, private _dDAapter: DashboardDataAdapter, private _rtAdapater: RecentTripDataAdapter,
-    private _dcAdapter: DevicesCountAdapter
-    ) { }
+    private _dcAdapter: DevicesCountAdapter, @Inject(ENV_CONFIG) private config: EnvironmentConfig
+    ) { 
+      this.apiBaseUrl = `${config.environment.apiUrl}`;
+      this.dashboardWidgetsApiUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/dashboard';
+      this.recentTripsApiUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/recenttrips';
+      this.devicesCountApiUrl = this.apiBaseUrl + ServiceConstants.baseurlv1 + '/countofshovelsdumpers';
+    }
 
   getDashboardWidgetsData(data: DashboardDate): Observable<any> {
     return this.http.post(this.dashboardWidgetsApiUrl, data).pipe(

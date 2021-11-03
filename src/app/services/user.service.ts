@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServiceConstants } from '../constants/ServiceConstants';
 import { UserModel } from '../models/usermodel';
+
+import { EnvironmentConfig } from 'src/environments/environment-config.interface';
+import { ENV_CONFIG } from '../../environments/environment-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +20,19 @@ export class UserService {
     }),
   };
 
-  private assetLoginApiUrl = ServiceConstants.baseurlv1 + '/login';
+  apiBaseUrl: string
 
-  constructor(private http: HttpClient) { }
+  private assetLoginApiUrl =  '/login';
 
-  login(credentials: UserModel): Observable<string> {
-    return this.http.post<string>(this.assetLoginApiUrl, credentials);
+  constructor(private http: HttpClient,
+    @Inject(ENV_CONFIG) private config: EnvironmentConfig
+    ) {
+      this.apiBaseUrl = `${config.environment.apiUrl}`;
+     }
+
+  login(credentials: UserModel): Observable<any> {
+    return this.http.get(this.apiBaseUrl + 'assets/api/Login?userEmail='+ credentials.userEmail +'&userPassword='+credentials.userPassword);
+
+    return this.http.post<string>(this.apiBaseUrl + ServiceConstants.baseurlv1 + this.assetLoginApiUrl, credentials);
   }
 }

@@ -46,11 +46,13 @@ export class LoginComponent implements OnInit {
       this.userService.login(loginDetails).toPromise().then(response => {
         if (response) {
           console.log(response, response['status'], response['message'].toLowerCase())
-          if (response['status'] == 'true' && response['message'].toLowerCase() == 'login succes') {
+          if (response['status'] == 'true' && (response['message'].toLowerCase() == 'login succes'
+          || response['message'].toLowerCase() == 'login success')) {
             let data = response['data'];
             sessionStorage.setItem("loggedInemployeeId", data.userId);
             sessionStorage.setItem("loggedInemployeeEmail", data.userEmail);
             sessionStorage.setItem("loggedInemployeeName", data.userName);
+            console.log(data)
             if (data.userName == "Demo") {
               this.router.navigate(['/assets/assetsummary']);
             }

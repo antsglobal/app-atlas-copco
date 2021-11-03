@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  // apiUrl: 'https://test-appweb.azurewebsites.net/'
+  // apiUrl: 'https://assetstrackertestapi.azurewebsites.net/'
+  apiUrl: 'https://assettrackertestapi.azurewebsites.net/'
 	// mqtt: {
 	// 	server: '48eb834e5bfc48fdb7a8c21995b506eb.s1.eu.hivemq.cloud',
   //   port: 8883,

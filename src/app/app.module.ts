@@ -11,6 +11,8 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MqttModule, IMqttServiceOptions } from "ngx-mqtt";
+import { environment } from '../environments/environment';
+import { HttpModule } from './http/http.module';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   password: "Ants@123",
@@ -37,6 +39,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BackButtonDisableModule.forRoot(),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     NgbModule,
+    HttpModule.forRoot({ environment })
   ],
   providers: [
     DatePipe
