@@ -1,0 +1,26 @@
+[
+  {
+    "icon": "dashboard",
+    "text": "Dashboard",
+    "url": "/employee/dashboard",
+    "children":[]
+  },
+  {
+    "icon": "loading",
+    "text": "Dumper",
+    "url": "/employee/dumperdetails",
+    "children":[]
+  },
+  {
+    "icon": "people",
+    "text": "Duration of the trip",
+    "url": "/employee/tripduration",
+    "children":[]
+  },
+  {
+    "icon": "extension",
+    "text": "Dumper Status",
+    "url": "/employee/dumperstatus",
+    "children":[]
+  }
+]
