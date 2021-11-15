@@ -31,7 +31,7 @@ export class UserService {
      }
 
   login(credentials: UserModel): Observable<any> {
-    return this.http.get(this.apiBaseUrl + 'assets/api/Login?userEmail='+ credentials.userEmail +'&userPassword='+credentials.userPassword);
+    // return this.http.get(this.apiBaseUrl + 'assets/api/Login?userEmail='+ credentials.userEmail +'&userPassword='+credentials.userPassword);
 
     return this.http.post<string>(this.apiBaseUrl + ServiceConstants.baseurlv1 + this.assetLoginApiUrl, credentials);
   }
