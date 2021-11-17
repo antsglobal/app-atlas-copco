@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://test-appweb.azurewebsites.net/'
+  apiUrl: 'https://azuresample-prod.azurewebsites.net' //JAVA active API URL.
 };
