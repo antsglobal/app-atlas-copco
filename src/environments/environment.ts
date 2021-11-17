@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://azuresample-prod.azurewebsites.net' //JAVA active API URL.
+  apiUrl: 'https://azuresample-prod.azurewebsites.net/' //JAVA active API URL.
 
   // apiUrl: 'https://test-appweb.azurewebsites.net/' //JAVA active API URL.
   // apiUrl: 'https://assetstrackertestapi.azurewebsites.net/'
